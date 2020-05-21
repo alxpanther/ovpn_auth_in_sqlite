@@ -153,11 +153,13 @@ class DBWorker():
                 self.curs.execute(f'UPDATE "users" SET "password" = "{password}" WHERE "users"."login" = "{args.login}";')
                 self.finish()
                 print('Парорль успешно изменен.')
+                exit(0)
             except sqlite3.OperationalError:
                 print('Ошибка записи в БД.')
                 exit(1)
         else:
             print(f'Пользователь {args.login} не существует!')
+            exit(1)
 
     def db_userinfo(self, args):
         '''
@@ -184,8 +186,8 @@ class DBWorker():
         if self.db_chk_user(login) and self.db_user_isactive(login):
             password2 = self.curs.execute(f'SELECT "password" FROM "users" WHERE "users"."login" = "{login}";').fetchone()[0]
             if self.pass_check(not_auth=False, password=password, password2=password2):
-                return 0
-        return 1
+                exit(0)
+        exit(1)
 
 if __name__ == '__main__':
     db = DBWorker()
