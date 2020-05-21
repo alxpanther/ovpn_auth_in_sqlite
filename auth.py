@@ -4,9 +4,10 @@
 import sqlite3
 import argparse
 import getpass
-import hashlib, secrets
+import hashlib
 import os
 import re
+
 
 class PasswordMismatch(Exception):
     '''
